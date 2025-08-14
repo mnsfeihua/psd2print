@@ -55,7 +55,6 @@ def apply_pattern_to_layer(layer, pattern_image, rotate=False):
     return cv2.merge([b, g, r, mask])
 
 def add_label_to_piece(image_to_label, label_text, position, rolate=False):
-    
     """在给定的图像上的指定位置添加带描边的文字标签。"""
     # [字体改动] 将 font_scale 从 2 改为 1.5
     font, font_scale, main_thickness, outline_thickness = cv2.FONT_HERSHEY_SIMPLEX, 1.2, 2, 12 # 描边也相应调细
