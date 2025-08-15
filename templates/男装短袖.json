@@ -1,0 +1,14 @@
+{
+  "name": "男装短袖模板",
+  "layer_names": ["领", "右袖", "左袖", "后片", "前片"],
+  "pattern_files": ["03.jpg", "05.jpg", "04.jpg", "02.jpg", "01.jpg"],
+  "rotation_rules": [
+    ["男装短袖版-M.psd", "后片"],
+    ["男装短袖版-2XL.psd", "右袖"],
+    ["男装短袖版-2XL.psd", "左袖"],
+    ["男装短袖版-XL.psd", "右袖"]
+  ],
+  "position_rules": {
+    "领": "top_left"
+  }
+}

@@ -50,6 +50,11 @@ def apply_pattern_to_layer(layer, pattern_image, rotate=False):
     pattern_cv = cv2.cvtColor(np.array(pattern_image), cv2.COLOR_RGB2BGR)
     h, w = mask.shape
     resized_pattern = cv2.resize(pattern_cv, (w, h))
+
+    print(f"应用印花图案到图层 '{layer.name}'，尺寸: {resized_pattern.shape[1]}x{resized_pattern.shape[0]}, 旋转: {rotate}")
+    if rotate:
+        resized_pattern = cv2.rotate(resized_pattern, cv2.ROTATE_180)
+
     final_piece = cv2.bitwise_and(resized_pattern, resized_pattern, mask=mask)
     b, g, r = cv2.split(final_piece)
     return cv2.merge([b, g, r, mask])
@@ -106,10 +111,13 @@ def process_single_template(template_psd_path):
         
         if found_layer:
             pattern_image = Image.open(full_pattern_path).convert("RGB")
-            processed_image_cv = apply_pattern_to_layer(found_layer, pattern_image)
+            should_rotate = (filename, found_layer.name) in ROTATION_RULES
+            print(f"处理图层 '{target_name}'，对应印花 '{pattern_filename}'，旋转: {should_rotate}")
+
+            processed_image_cv = apply_pattern_to_layer(found_layer, pattern_image, rotate=should_rotate)
             
             if processed_image_cv is not None:
-                should_rotate = (filename, found_layer.name) in ROTATION_RULES
+                
                 position_key = POSITION_RULES.get(found_layer.name)
                 
                 img_h, img_w, _ = processed_image_cv.shape
